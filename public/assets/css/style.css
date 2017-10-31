@@ -1,0 +1,35 @@
+li {
+  padding: 5px;
+  margin: 5px;
+}
+
+body{
+	background-image: url("../images/grey_wash_wall.png");
+}
+
+#page-header{
+	font-weight: bold;
+	font-size: 60px;
+}
+
+.card-header{
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.list-group-item{
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.jumbotron{
+	text-align:center;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+
+#center-card{
+	margin: auto;
+}

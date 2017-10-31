@@ -1,0 +1,88 @@
+<div class="container">
+  <br>
+
+  <div class="jumbotron">
+    <h1 class="display-3" id = "page-header" >BILLS</h1>
+    <img src="/assets/images/money.png" width="200"></img>
+  </div>
+  <br>
+  <div class ="row">
+    <div class="col-md-6" id = "center-card">
+      <div class="card text-center">
+        <div class="card-header">Add A New Bill</div>
+        <div class="card-body">
+          <form class="create-update-form action="/api/bills" method="POST">
+            <div class="form-group">
+              <label for="validationCustom01"><strong>Bill Name (Required)</strong></label>
+              <input type="text" class="form-control" id="billName" name="billName" required>
+              <div class="invalid-feedback">
+                  Please enter a name for your bill.
+              </div>
+              <label for="validationCustom01"><strong>Bill Category (Required)</strong></label>
+              <input type="text" class="form-control" id="billCategory" name="billCategory" required>
+              <div class="invalid-feedback">
+                  Please enter a category for your bill.
+              </div>
+              <label for="validationCustom01"><strong>Bill Frequency (Required)</strong></label>
+              <input type="text" class="form-control" id="frequency" name="frequency" required>
+              <div class="invalid-feedback">
+                  Please enter a frequency for your bill.
+              </div>
+            </div>
+            <button class= 'btn btn-danger' type="submit" id="submitBtn">ADD BILL</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class ="row">
+    <div class="col-md-6">
+      <div class="card text-center">
+        <div class="card-header">ACTIVE BILLS</div>
+        <div class="card-body">
+          <ul class = "list-group">
+            {{#each bills}}
+              {{#if this.active_status}}
+                <li class = "list-group-item">
+                  {{this.bill_id}}
+                  {{this.bill_name}}
+                  {{this.bill_category}}
+                  {{this.due_frequency}}
+                  {{this.active_status}}
+                  <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                    <button class= 'btn btn-danger' type="submit">INACTIVATE</button>
+                  </form>
+                 </li>
+              {{/if}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card text-center">
+        <div class="card-header">INACTIVE BILLS</div>
+        <div class="card-body">
+          <ul class = "list-group">
+            {{#each bills}}
+              {{#unless this.active_status}}
+                <li class = "list-group-item">
+                  {{this.bill_id}}
+                  {{this.bill_name}}
+                  {{this.bill_category}}
+                  {{this.due_frequency}}
+                  {{this.active_status}}
+                </li>
+              {{/unless}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
