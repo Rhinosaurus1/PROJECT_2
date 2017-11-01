@@ -9,16 +9,13 @@ var bills = {
     });
   },
 
+  insertPayment: function(table, field1, field2, billID, cb){
+    orm.insertPayment(table, field1, field2, billID, function(res){
+      cb(res);
+    });
+  },
+
   insertOne: function(table, field1, field2, field3, field4, userID, billName, billCategory, frequency, cb) {
-    console.log("table: " + table);
-    console.log("field1: " + field1);
-    console.log("field2: " + field2);
-    console.log("field3: " + field3);
-    console.log("field4: " + field4);
-    console.log("userID: " + userID);
-    console.log("billName: " + billName);
-    console.log("billCategory: " + billCategory);
-    console.log("frequency: " + frequency);
     orm.insertOne(table, field1, field2, field3, field4, userID, billName, billCategory, frequency, function(res) {
       cb(res);
     });
