@@ -11,7 +11,8 @@ else {
     host: "localhost",
     user: "root",
     password: "Determined08!",
-    database: "bill_tracker_db"
+    database: "bill_tracker_db",
+    multipleStatements: true
   });
 };
 

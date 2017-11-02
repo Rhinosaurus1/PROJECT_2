@@ -9,6 +9,18 @@ var bills = {
     });
   },
 
+  selectAllPayments: function(cb) {
+    orm.selectAllPayments(function(res) {
+      cb(res);
+    });
+  },
+
+  selectAllBillsPayments: function(cb) {
+    orm.selectAllBillsPayments(function(res) {
+      cb(res);
+    });
+  },
+
   insertPayment: function(table, field1, field2, billID, cb){
     orm.insertPayment(table, field1, field2, billID, function(res){
       cb(res);
@@ -21,11 +33,22 @@ var bills = {
     });
   },
 
-  updateOne: function(table, field, billID, cb) {
+  updateOnePayment: function(table, field, paymentID, cb) {
     console.log("table: " + table);
     console.log("field: " + field);
+    console.log("paymentID: " + paymentID);
+    orm.updateOnePayment(table, field, paymentID, function(res) {
+      cb(res);
+    });
+  },
+
+  updateOneBill: function(table1, field1, billID, table2, field2, billID, cb) {
+    console.log("table1: " + table1);
+    console.log("table2: " + table2);
+    console.log("field1: " + field1);
+    console.log("field2: " + field2);
     console.log("billID: " + billID);
-    orm.updateOne(table, field, billID, function(res) {
+    orm.updateOneBill(table1, field1, billID, table2, field2, billID, function(res) {
       cb(res);
     });
   }

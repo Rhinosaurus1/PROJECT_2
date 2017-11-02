@@ -3,31 +3,61 @@
 
   <div class="jumbotron">
     <h1 class="display-3" id = "page-header" >BILLS</h1>
-    <img src="/assets/images/money.png" width="200"></img>
+    <img src="/assets/images/money.png" width="100"></img>
   </div>
   <br>
   <div class ="row">
-    <div class="col-md-6" id = "center-card">
-      <div class="card text-center">
-        <div class="card-header">Add A New Bill</div>
-        <div class="card-body">
-          <form class="create-update-form action="/api/bills" method="POST">
+    <div class="col-md-12">
+      <div class="panel text-center">
+        <div class="panel-heading"><h3 class="panel-title">PAYMENTS DUE IN:</h3><h3 id=DateDiv></h3></div>
+        <div class="panel-body">
+          <ul class = "list-group">
+            {{#each payments}}
+              {{#if this.active_status}}
+                <li class = "list-group-item">
+                  {{this.bill_name}}
+                  {{#if this.paid_status}}
+                    <span class="glyphicon glyphicon-ok-sign" id="okCheck"></span>
+                    PAID: {{this.date_paid_formatted}}
+                    AMOUNT: {{this.amount}}
+                    CONFIRMATION ID: {{this.confirmation_code}}  
+                  {{/if}}
+                  {{#unless this.paid_status}}
+                    <span class="glyphicon glyphicon-minus-sign" id="minus"></span>
+                    DUE: {{this.month_due_formatted}}
+                  {{/unless}}
+                  <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                    <button class= 'btn btn-danger' type="submit">INACTIVATE</button>
+                  </form>
+                  {{#unless this.paid_status}}
+                  <form action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="payment_id" value="{{this.payment_id}}">
+                    <button class= 'btn btn-success' type="submit">PAY</button>
+                  </form>
+                  {{/unless}}
+                 </li>
+              {{/if}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class ="row">
+    <div class="col-md-12" id = "center-panel">
+      <div class="panel text-center">
+        <div class="panel-heading"><h3 class="panel-title">ADD A NEW BILL</h3></div>
+        <div class="panel-body">
+          <form class="create-update-form form-inline action="/api/bills?_method=POST" method="POST">
             <div class="form-group">
-              <label for="validationCustom01"><strong>Bill Name (Required)</strong></label>
-              <input type="text" class="form-control" id="billName" name="billName" required>
-              <div class="invalid-feedback">
-                  Please enter a name for your bill.
-              </div>
-              <label for="validationCustom01"><strong>Bill Category (Required)</strong></label>
-              <input type="text" class="form-control" id="billCategory" name="billCategory" required>
-              <div class="invalid-feedback">
-                  Please enter a category for your bill.
-              </div>
-              <label for="validationCustom01"><strong>Bill Frequency (Required)</strong></label>
-              <input type="text" class="form-control" id="frequency" name="frequency" required>
-              <div class="invalid-feedback">
-                  Please enter a frequency for your bill.
-              </div>
+              <label for="validationCustom01"><strong>Bill Name</strong></label>
+              <input type="text" class="form-control" id="billName" name="billName" placeholder="(Required)" required >
+              <label for="validationCustom01"><strong>Bill Category</strong></label>
+              <input type="text" class="form-control" id="billCategory" name="billCategory" placeholder="(Required)" required>
+              <label for="validationCustom01"><strong>Bill Frequency</strong></label>
+              <input type="text" class="form-control" id="frequency" name="frequency" placeholder="(Required)" required>
             </div>
             <button class= 'btn btn-danger' type="submit" id="submitBtn">ADD BILL</button>
           </form>
@@ -36,45 +66,17 @@
     </div>
   </div>
   <br>
-  <div class ="row">
-    <div class="col-md-6">
-      <div class="card text-center">
-        <div class="card-header">ACTIVE BILLS</div>
-        <div class="card-body">
-          <ul class = "list-group">
-            {{#each bills}}
-              {{#if this.active_status}}
-                <li class = "list-group-item">
-                  {{this.bill_id}}
-                  {{this.bill_name}}
-                  {{this.bill_category}}
-                  {{this.due_frequency}}
-                  {{this.active_status}}
-                  <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
-                    <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                    <button class= 'btn btn-danger' type="submit">INACTIVATE</button>
-                  </form>
-                 </li>
-              {{/if}}
-            {{/each}}
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-md-6">
-      <div class="card text-center">
-        <div class="card-header">INACTIVE BILLS</div>
-        <div class="card-body">
+  <div class = "row">
+    <div class="col-md-12">
+      <div class="panel text-center">
+        <div class="panel-heading"><h3 class="panel-title">INACTIVE BILLS</h3></div>
+        <div class="panel-body">
           <ul class = "list-group">
             {{#each bills}}
               {{#unless this.active_status}}
                 <li class = "list-group-item">
-                  {{this.bill_id}}
                   {{this.bill_name}}
                   {{this.bill_category}}
-                  {{this.due_frequency}}
-                  {{this.active_status}}
                 </li>
               {{/unless}}
             {{/each}}
@@ -83,6 +85,7 @@
       </div>
     </div>
   </div>
+  <br>
 
 </div>
 
