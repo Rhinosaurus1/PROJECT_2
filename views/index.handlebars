@@ -33,7 +33,11 @@
                   {{#unless this.paid_status}}
                   <form action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
                     <input type="hidden" name="payment_id" value="{{this.payment_id}}">
-                    <button class= 'btn btn-success' type="submit">PAY</button>
+                    <label for="validationCustom01"><strong>Amount</strong></label>
+                    <input type="text" class="form-control" id="amount" name="amount" placeholder="(Amount)" required >
+                    <label for="validationCustom01"><strong>Confirmation ID</strong></label>
+                    <input type="text" class="form-control" id="confirmID" name="confirmID" placeholder="(Confirmation ID)" required >
+                    <button class= 'btn btn-primary' type="submit">PAY</button>
                   </form>
                   {{/unless}}
                  </li>

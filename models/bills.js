@@ -42,6 +42,19 @@ var bills = {
     });
   },
 
+  updateOnePaymentNew: function(table, field1, amount, field2, confirmID, field3, paymentID, cb) {
+    console.log("table: " + table);
+    console.log("field1: " + field1);
+    console.log("amount: " + amount);
+    console.log("field2: " + field2);
+    console.log("confirmID: " + confirmID);
+    console.log("field3: " + field3);
+    console.log("paymentID: " + paymentID);
+    orm.updateOnePaymentNew(table, field1, amount, field2, confirmID, field3, paymentID, function(res) {
+      cb(res);
+    });
+  },
+
   updateOneBill: function(table1, field1, billID, table2, field2, billID, cb) {
     console.log("table1: " + table1);
     console.log("table2: " + table2);

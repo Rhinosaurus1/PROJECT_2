@@ -51,8 +51,21 @@ router.post("/", function(req, res) {
   });
 });
 
+//router.put("/api/payments/:id", function(req, res) {
+  //bills.updateOnePayment("payments", "payment_id", req.params.id, function(result) {
+    //if (result.changedRows == 0) {
+      //return res.status(404).end();
+    //} 
+    //else {
+      //res.redirect("/");
+    //}
+  //});
+//});
+
+
+//table, field1, amount, field2, confirmID, field3, paymentID, cb
 router.put("/api/payments/:id", function(req, res) {
-  bills.updateOnePayment("payments", "payment_id", req.params.id, function(result) {
+  bills.updateOnePaymentNew("payments", "amount", req.body.amount, "confirmation_code", req.body.confirmID, "payment_id", req.params.id, function(result){
     if (result.changedRows == 0) {
       return res.status(404).end();
     } 

@@ -73,6 +73,17 @@ var orm = {
     });
   },
 
+  updateOnePaymentNew: function(table, field1, amount, field2, confirmID, field3, paymentID, cb) {
+    var queryString = "UPDATE ?? SET paid_status ='1', date_paid = DATE_FORMAT(NOW(),'%Y-%m-%d'), ?? = ?, ?? = ? WHERE ?? = ?";
+    console.log(queryString);
+    connection.query(queryString,[table, field1, amount, field2, confirmID, field3, paymentID], function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
+
   updateOneBill: function(table1, field1, billID, table2, field2, billID, cb) {
     var queryString1 = "UPDATE ?? SET active_status ='0' WHERE ?? = ?";
     var queryString2 = "UPDATE ?? SET active_status ='0' WHERE ?? = ?";
