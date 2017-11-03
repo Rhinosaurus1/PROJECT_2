@@ -50,6 +50,18 @@ var orm = {
       cb(result);
     });
   },
+
+//INSERT INTO payments (bill_id, month_due) VALUES (4,DATE_FORMAT((NOW()+interval 1 MONTH),'%Y-%m-01'));
+  insertNextPayment: function(table, field1, field2, billID, cb){
+    var queryString = "INSERT INTO ?? (??,??) VALUES (?,DATE_FORMAT((NOW()+ INTERVAL 1 MONTH),'%Y-%m-01'));"
+    console.log(queryString);
+    connection.query(queryString, [table, field1, field2, billID] , function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
   
   insertOne: function(table, field1, field2, field3, field4, userID, billName, billCategory, frequency, cb) {
     var queryString = "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?);"

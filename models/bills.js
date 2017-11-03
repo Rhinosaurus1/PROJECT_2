@@ -27,6 +27,12 @@ var bills = {
     });
   },
 
+  insertNextPayment: function(table, field1, field2, billID, cb){
+    orm.insertNextPayment(table, field1, field2, billID, function(res){
+      cb(res);
+    });
+  },
+
   insertOne: function(table, field1, field2, field3, field4, userID, billName, billCategory, frequency, cb) {
     orm.insertOne(table, field1, field2, field3, field4, userID, billName, billCategory, frequency, function(res) {
       cb(res);
