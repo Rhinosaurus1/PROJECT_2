@@ -19,7 +19,7 @@
                   {{#if this.paid_status}}
                     <span class="glyphicon glyphicon-ok-sign" id="okCheck"></span>
                     PAID: {{this.date_paid_formatted}}
-                    AMOUNT: {{this.amount}}
+                    AMOUNT: ${{this.amount}}
                     CONFIRMATION ID: {{this.confirmation_code}}  
                   {{/if}}
                   {{#unless this.paid_status}}
@@ -49,7 +49,9 @@
       </div>
     </div>
   </div>
+
   <br>
+
   <div class ="row">
     <div class="col-md-12" id = "center-panel">
       <div class="panel text-center">
@@ -70,27 +72,69 @@
       </div>
     </div>
   </div>
+
   <br>
+
   <div class = "row">
     <div class="col-md-12">
       <div class="panel text-center">
         <div class="panel-heading"><h3 class="panel-title">INACTIVE BILLS</h3></div>
         <div class="panel-body">
+          <h4 class="panel-title">
+          <a data-toggle="collapse" href="#collapse1"><span class="glyphicon glyphicon-th-list"></span></a>
+          </h4>
+          <div id="collapse1" class="panel-collapse collapse">
+
+	          <ul class = "list-group">
+	            {{#each bills}}
+	              {{#unless this.active_status}}
+	                <li class = "list-group-item">
+	                  {{this.bill_name}}
+	                  {{this.bill_category}}
+                    <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
+                      <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                      <button class= 'btn btn-danger' type="submit">HISTORY</button>
+                    </form>
+	                </li>
+	              {{/unless}}
+	            {{/each}}
+	          </ul>
+
+	      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class ="row">
+    <div class="col-md-12">
+      <div class="panel text-center">
+        <div class="panel-heading"><h3 class="panel-title">History</h3></div>
+        <div class="panel-body">
           <ul class = "list-group">
-            {{#each bills}}
-              {{#unless this.active_status}}
+            {{#each history}}
                 <li class = "list-group-item">
+                  {{this.bill_id}}
                   {{this.bill_name}}
-                  {{this.bill_category}}
+                  PAID: {{this.date_paid}}
+                  AMOUNT: ${{this.amount}}
+                  CONFIRMATION ID: {{this.confirmation_code}}
                 </li>
-              {{/unless}}
             {{/each}}
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <br>
 
+  <footer class="footer">
+    <div class="row text-center">
+    	<div class="col-md-12">
+      		<p>&copy Copyright 2017</p>
+      	</div>
+    </div>
+  </footer>
 </div>
 

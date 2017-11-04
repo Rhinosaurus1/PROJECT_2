@@ -4,6 +4,21 @@ var connection = require("../config/connection.js");
 
 //define the three different mySQL queries
 var orm = {
+
+  selectHistory: function(table, billID, cb) {
+    console.log("table: " + table);
+    console.log("billID: " + billID);
+    var queryString = "select b.bill_name,p.bill_id,p.date_paid,p.amount,p.confirmation_code from ?? as p inner join bills as b on p.bill_id = b.bill_id where p.paid_status != 0 and p.bill_id = ?";
+    console.log(queryString);
+    connection.query(queryString, [table, billID], function(err, result) {
+      if (err) {
+        throw err;
+      }
+      console.log("result: "+ JSON.stringify(result));
+      cb(result);
+    });
+  },
+
   selectAll: function(cb) {
     var queryString = "SELECT * FROM bills";
     connection.query(queryString, function(err, result) {

@@ -3,6 +3,14 @@ var orm = require("../config/orm.js");
 
 //call the three different orm functions
 var bills = {
+
+  selectHistory: function(table, billID, cb) {
+    //console.log("billID: " + billID);
+    orm.selectHistory(table, billID, function(res) {
+      cb(res);
+    });
+  },
+
   selectAll: function(cb) {
     orm.selectAll(function(res) {
       cb(res);
