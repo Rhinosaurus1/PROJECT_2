@@ -28,7 +28,11 @@
                   {{/unless}}
                   <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
                     <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                    <button class= 'btn btn-danger' type="submit">INACTIVATE</button>
+                    <button class= 'btn btn-danger' type="submit" id="inactive">INACTIVATE</button>
+                  </form>
+                  <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
+                      <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                      <button class= 'btn btn-danger' type="submit" class="historyBtn">HISTORY</button>
                   </form>
                   {{#unless this.paid_status}}
                   <form action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
@@ -93,7 +97,7 @@
 	                  {{this.bill_category}}
                     <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
                       <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                      <button class= 'btn btn-danger' type="submit">HISTORY</button>
+                      <button class= 'btn btn-danger' type="submit" class="historyBtn">HISTORY</button>
                     </form>
 	                </li>
 	              {{/unless}}
@@ -108,22 +112,30 @@
 
   <br>
 
-  <div class ="row">
-    <div class="col-md-12">
-      <div class="panel text-center">
-        <div class="panel-heading"><h3 class="panel-title">History</h3></div>
-        <div class="panel-body">
+  <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+          <h5 class="modal-title" id="modalLabel">History!</h5>
+        </div>
+        <div class="modal-body">
           <ul class = "list-group">
             {{#each history}}
+              {{#if this.bill_id}}
                 <li class = "list-group-item">
                   {{this.bill_id}}
                   {{this.bill_name}}
-                  PAID: {{this.date_paid}}
+                  PAID: {{this.date_paid_formatted}}
                   AMOUNT: ${{this.amount}}
                   CONFIRMATION ID: {{this.confirmation_code}}
                 </li>
+              {{/if}}
             {{/each}}
           </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

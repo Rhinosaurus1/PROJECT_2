@@ -26,6 +26,17 @@
 	var monthYear = month+"-"+year;
 
 	$("#DateDiv").html(monthYear);
+
+	$("#inactive").on("click", function(event) {
+        alert("Are you sure you want to inactivate?")
+    });
+
+    $(".historyBtn").on("click", function(event) {
+      event.preventDefault();
+
+      $("#historyModal").modal("toggle");
+    });
+
 </script>
 
 </body>

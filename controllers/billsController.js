@@ -91,7 +91,6 @@ router.get("/api/history/:id", function(req, res) {
       console.log("req.body: " + JSON.stringify(req.body));
       console.log("data: " + JSON.stringify(data2));
       hbsObjectNew.history = data2;
-    
       console.log(hbsObjectNew);
       res.render("index", hbsObjectNew);
     //res.redirect("/");
