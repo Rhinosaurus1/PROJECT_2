@@ -34,12 +34,9 @@
 
 	$(".inactive").on("click", function(event) {
         event.preventDefault();
-        console.log("selected ID: " + $(this).attr('id'));
-        var y = confirm("Are you sure you want to Inactivate?");
+        var y = confirm("Are you sure you want to Inactivate?  This action cannot be undone!");
         if (y === true) {
-            var nodeId = $(this).attr('id');
-            console.log("again ID: " + nodeId);
-            $("#hiddenSubmit").submit();
+            this.form.submit();
         }
     });
 

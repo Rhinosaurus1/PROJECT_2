@@ -28,11 +28,7 @@
                   {{/unless}}
                   <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
                     <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                    <button class= 'btn btn-danger inactive' type="submit" id={{{this.bill_id}}}>INACTIVATE</button>
-                  </form>
-                  <form style="display:none;" id="hiddenSubmit" action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
-                    <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                    <button type="hidden" class= 'btn' type="submit"></button>
+                    <button class= 'btn btn-danger inactive' type="submit" id={{this.bill_id}}>INACTIVATE</button>
                   </form>
                   <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
                     <input type="hidden" name="bill_id" value="{{this.bill_id}}">
