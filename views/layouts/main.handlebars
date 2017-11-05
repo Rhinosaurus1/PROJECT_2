@@ -11,7 +11,8 @@
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 		<!-- Added link to the Bootstrap JS -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
 		
 	</head>
@@ -27,15 +28,47 @@
 
 	$("#DateDiv").html(monthYear);
 
-	$("#inactive").on("click", function(event) {
-        alert("Are you sure you want to inactivate?")
+	//$("#inactive").on("click", function(event) {
+        //alert("Are you sure you want to inactivate?")
+    //});
+
+	$(".inactive").on("click", function(event) {
+        event.preventDefault();
+        console.log("selected ID: " + $(this).attr('id'));
+        var y = confirm("Are you sure you want to Inactivate?");
+        if (y === true) {
+            var nodeId = $(this).attr('id');
+            console.log("again ID: " + nodeId);
+            $("#hiddenSubmit").submit();
+        }
     });
 
-    $(".historyBtn").on("click", function(event) {
-      event.preventDefault();
+    $(window).load(function(){
+    	if(!$.trim($("#historyListGroup").html()).length){
+     		return;
+     	}
+     	else{
+     		$("#historyModal").modal({backdrop:'static', keyboard: false});
+     	}	
+  	});
 
-      $("#historyModal").modal("toggle");
-    });
+	//$(".historyBtn").on("click", function(event){
+	 	//event.preventDefault();
+	 	//var nodeId = $(this).attr('id');
+		//console.log("again ID: " + nodeId);
+
+	 	//$.ajax({
+	 		//type: "GET",
+	 		//url: "/api/history/" + nodeId
+	 	//}).done(function(yourData){
+	 		//$("#historyModal").modal("toggle");	
+	 	//});
+	//});
+
+	$("#historyModal").on("hidden.bs.modal", function () {
+    	window.location = "/";
+	});
+
 
 </script>
 

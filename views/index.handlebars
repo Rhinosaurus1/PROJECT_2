@@ -28,11 +28,15 @@
                   {{/unless}}
                   <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
                     <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                    <button class= 'btn btn-danger' type="submit" id="inactive">INACTIVATE</button>
+                    <button class= 'btn btn-danger inactive' type="submit" id={{{this.bill_id}}}>INACTIVATE</button>
+                  </form>
+                  <form style="display:none;" id="hiddenSubmit" action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
+                    <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                    <button type="hidden" class= 'btn' type="submit"></button>
                   </form>
                   <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
-                      <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                      <button class= 'btn btn-danger' type="submit" class="historyBtn">HISTORY</button>
+                    <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                    <button class= 'btn btn-danger' type="submit" class="historyBtn" data-toggle="modal" id="{{{this.bill_id}}} data-target="#historyModal">HISTORY</button>
                   </form>
                   {{#unless this.paid_status}}
                   <form action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
@@ -97,7 +101,7 @@
 	                  {{this.bill_category}}
                     <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
                       <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                      <button class= 'btn btn-danger' type="submit" class="historyBtn">HISTORY</button>
+                      <button class= 'btn btn-danger' type="submit" class="historyBtn" data-toggle="modal" id="{{{this.bill_id}}} data-target="#historyModal">HISTORY</button>
                     </form>
 	                </li>
 	              {{/unless}}
@@ -116,13 +120,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-          <h5 class="modal-title" id="modalLabel">History!</h5>
+          <h2 class="modal-title" id="modalLabel">History!</h2>
         </div>
-        <div class="modal-body">
-          <ul class = "list-group">
+        <div class="modal-body" id="historyModalBody">
+          <ul class = "list-group historyListGroup" id="historyListGroup">
             {{#each history}}
-              {{#if this.bill_id}}
+              {{#if this.no_history}}
+                {{this.no_history}}
+              {{else}}
                 <li class = "list-group-item">
                   {{this.bill_id}}
                   {{this.bill_name}}
