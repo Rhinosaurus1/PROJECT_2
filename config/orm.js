@@ -27,6 +27,16 @@ var orm = {
     });
   },
 
+  selectAllUnpaid: function(cb){
+    var queryString = "SELECT p.bill_id, date_format((p.month_due), '%b-%Y') as 'month_due_formatted', p.paid_status, b.bill_name from payments as p inner join bills as b on p.bill_id = b.bill_id where Month(month_due) = MONTH(Current_date()) and Year(month_due) = Year(Current_date()) and p.paid_status = 0;";
+    connection.query(queryString, function(err, result){
+      if (err) {
+          throw err;
+      }
+        cb(result);
+    }); 
+  },
+
   selectAllPayments: function(cb){
   	var queryString = "SELECT p.bill_id, p.month_due, p.paid_status, b.bill_name from payments as p inner join bills as b on p.bill_id = b.bill_id where Month(month_due) = MONTH(Current_date()) and Year(month_due) = Year(Current_date())";
   	connection.query(queryString, function(err, result){

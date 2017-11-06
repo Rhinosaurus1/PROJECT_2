@@ -1,6 +1,7 @@
 //set package dependencies
 var express = require("express");
 var router = express.Router();
+var nodemailer = require("nodemailer");
 
 var bills = require("../models/bills.js");
 
@@ -34,6 +35,57 @@ var bills = require("../models/bills.js");
     //}
   //});
 //});
+router.get("/send", function(req,res){
+  bills.selectAllUnpaid(function(data){
+    var paymentObj = {
+      payments: data
+    };
+
+    console.log(JSON.stringify(paymentObj.payments));
+
+    var transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      auth: {
+          user: 'billstopay109@gmail.com',
+          pass: 'blake150'
+      }
+    });
+
+    var monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    var date = new Date();
+    var month = monthsArray[date.getMonth()];
+    var year = date.getFullYear();
+    var monthYear = month+"-"+year;
+
+    var billText = "";
+    console.log("paymentObj payments length: " + paymentObj.payments.length);
+
+    for(i=0; i<paymentObj.payments.length; i++){
+      var billItem = ("<p>Bill Name:   <b>" + paymentObj.payments[i].bill_name + "</b>      Due:    <b>" + paymentObj.payments[i].month_due_formatted + "</b></p>");
+      billText = billText + billItem;
+    };
+
+    console.log(billText);
+    console.log(JSON.stringify(billText));
+
+    var mailOptions = {
+      from: 'billstopay109@gmail.com',
+      to: 'allenjeffreyl@gmail.com',
+      subject: "Bills due in " + monthYear,
+      text: "Bills due in " + monthYear,
+      html: "<p><b>THE FOLLOWING BILLS ARE DUE IN " +monthYear+ "</b></p>" + billText
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+    });
+    res.send("sent");
+  });
+});
 
 router.get("/", function(req, res) {
   bills.selectAllBillsPayments(function(data) {

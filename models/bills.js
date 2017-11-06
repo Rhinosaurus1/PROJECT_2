@@ -17,6 +17,12 @@ var bills = {
     });
   },
 
+  selectAllUnpaid: function(cb) {
+    orm.selectAllUnpaid(function(res) {
+      cb(res);
+    });
+  },
+
   selectAllPayments: function(cb) {
     orm.selectAllPayments(function(res) {
       cb(res);

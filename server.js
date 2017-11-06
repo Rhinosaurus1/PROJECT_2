@@ -18,4 +18,6 @@ app.set("view engine", "handlebars");
 
 app.use("/", routes);
 
+var nodemailer = require("nodemailer");
+
 app.listen(PORT);
