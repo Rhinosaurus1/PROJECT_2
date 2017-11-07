@@ -10,27 +10,31 @@
     <div class="col-md-12">
       <div class="panel">
         <div class="panel-heading text-center"><h3 class="panel-title">PAYMENTS DUE IN:</h3><h2 id=DateDiv></h2></div>
-        <hr>
-        <div class="panel-body">
+        <div class="panel-body fullBillPanel">
             {{#each payments}}
               {{#if this.active_status}}
                 <div class = "row">
-                  <div class = "panel-body">
+                  <div class = "panel-body billPanels">
                     <div class = "col-md-2 boxes text-center">
-
                       {{#if this.paid_status}}
-                        <span class="glyphicon glyphicon-ok-sign" id="okCheck"></span><p><strong>PAID</strong></p>
+                        <ul class="list-group">
+                          <li class="list-group-item glyphGroup"><span class="glyphicon glyphicon-ok-sign" id="okCheck"></span></li>
+                          <li class="list-group-item glyphGroup"><strong>PAID</strong></li>
+                        <ul>
                       {{/if}}
                       {{#unless this.paid_status}}
-                        <span class="glyphicon glyphicon-minus-sign" id="minus"></span><p><strong>NOT PAID</strong></p>
+                        <ul class="list-group">
+                          <li class="list-group-item glyphGroup"><span class="glyphicon glyphicon-minus-sign" id="minus"></span></li>
+                          <li class="list-group-item glyphGroup"><strong>NOT PAID</strong></li>
+                        </ul>
                       {{/unless}}
                     </div>
 
-                    <div class = "col-md-2 boxes">
+                    <div id="billNameDiv" class = "col-md-2 boxes">
                       <strong>{{this.bill_name}}</strong>
                     </div>
 
-                    <div class = "col-md-2 boxes">
+                    <div id="paidDueDiv" class = "col-md-2 boxes">
                       {{#if this.paid_status}}
                         <strong>PAID: {{this.date_paid_formatted}}</strong>
                       {{/if}}
@@ -41,35 +45,42 @@
 
                     <div class= "col-md-4 boxes"> 
                       {{#if this.paid_status}}
-                        <p><strong>AMOUNT:  ${{this.amount}}</strong></p>    
-                        <p><strong>CONFIRMATION ID:  {{this.confirmation_code}}</strong></p>
+                        <ul class="list-group">
+                          <li class="list-group-item"><strong>AMOUNT:  ${{this.amount}}</strong></li>
+                          <li class="list-group-item"><strong>CONFIRMATION ID:  {{this.confirmation_code}}</strong></li>
+                        </ul>
                       {{/if}}
                       {{#unless this.paid_status}}
-                        <form action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
-                          <input type="hidden" name="payment_id" value="{{this.payment_id}}">
-                          <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                          <label for="validationCustom01"><strong>Amount</strong></label>
-                          <input type="text" class="form-control" id="amount" name="amount" placeholder="(Amount)" required >
-                          <label for="validationCustom01"><strong>Confirmation ID</strong></label>
-                          <input type="text" class="form-control" id="confirmID" name="confirmID" placeholder="(Confirmation ID)" required >
-                          <button class= 'btn btn-success' type="submit">PAY</button>
+                        <form class="form-inline" action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
+                          <div class="form-group justify-content-center">
+                            <input type="hidden" name="payment_id" value="{{this.payment_id}}">
+                            <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                            <label id="amountLabel" for="validationCustom01"><strong>Amount: $</strong></label>
+                            <input type="number" min="0.01" max="1000000000.00" step="0.01" class="form-control" id="amount" name="amount" placeholder="(Amount)" required >
+                            <label><strong>Confirmation ID:</strong></label>
+                            <input type="text" class="form-control" id="confirmID" name="confirmID" placeholder="(Confirmation ID)">
+                          </div>
+                          <button id="payBtn" class= 'btn btn-success' type="submit">PAY</button>
                         </form>
                       {{/unless}}
                     </div>
 
                     <div class = col-md-2 boxes">
-                      <form action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
-                        <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                        <button class= 'btn btn-danger inactive' type="submit" id={{this.bill_id}}>INACTIVATE</button>
-                      </form>
-                      <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
-                        <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                        <button class= 'btn btn-primary' type="submit" class="historyBtn" data-toggle="modal" id="{{{this.bill_id}}} data-target="#historyModal">HISTORY</button>
-                      </form>
+                      <div class="btnDiv">
+                        <form class= "btnForm" action="/api/bills/{{this.bill_id}}?_method=PUT" method="POST">
+                          <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                          <button class= 'btn btnCSS btn-danger inactive' type="submit" id={{this.bill_id}}>INACTIVATE</button>
+                        </form>
+                      </div>
+                      <div class="btnDiv">
+                        <form class= "btnForm" action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
+                          <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                          <button class= 'btn btnCSS btn-primary' type="submit" class="historyBtn" data-toggle="modal" id="{{{this.bill_id}}} data-target="#historyModal">HISTORY</button>
+                        </form>
+                      </div>
                     </div> 
                   </div>
                 </div>
-                <hr>
               {{/if}}
             {{/each}}
         </div>
@@ -83,37 +94,32 @@
     <div class="col-md-12" id = "center-panel">
       <div class="panel text-center">
         <div class="panel-heading"><h3 class="panel-title">ADD A NEW BILL</h3></div>
-        <div class="panel-body">
-          <form class="create-update-form form-inline action="/api/bills?_method=POST" method="POST">
-            <div class="form-group inline justify-content-center">
-              <div class = "col-md-4">
-                <p><label for="validationCustom01"><strong>Bill Name</strong></label></p>
-                <p><input type="text" class="form-control" id="billName" name="billName" placeholder="Name" required ></p>
+        <div id="addBillPanel" class="panel-body">
+          <form id="newBillForm" class="create-update-form form-inline action="/api/bills?_method=POST" method="POST">
+            <div id="inlineBillForm" class="form-inline">
+              <div class = "form-group">
+                <input type="text" class="form-control" id="billName" name="billName" placeholder="(Name)" required>
               </div>
-              <div class = "col-md-4">
-                <p><label for="validationCustom02"><strong>Bill Category</strong></label></p>
-                <p><select class="form-control" id="billCategory" name="billCategory" required>
-                    <option></option>
-                    <option>Utilities</option>
-                    <option>Service</option>
-                    <option>Housing (Rent/Mortgage)</option>
-                    <option>Loan Payments</option>
-                    <option>Insurance</option>
-                    <option>Allowance</option>
-                    <option>Other</option>
-                  </select>
-                </p>
+              <div class = "form-group">
+                <select class="form-control" id="billCategory" name="billCategory" required>
+                  <option value="" selected hidden>(Category)</option>
+                  <option>Utilities</option>
+                  <option>Service</option>
+                  <option>Housing (Rent/Mortgage)</option>
+                  <option>Loan Payments</option>
+                  <option>Insurance</option>
+                  <option>Allowance</option>
+                  <option>Other</option>
+                </select>
               </div>
-              <div class = "col-md-4">
-                <p><label for="validationCustom03"><strong>Bill Frequency</strong></label></p>
-                <p><select class="form-control" id="frequency" name="frequency"required>
-                    <option></option>
-                    <option>Monthly</option>
-                  </select>
-                </p>
+              <div class = "form-group">
+                <select class="form-control" id="frequency" name="frequency"required>
+                  <option value="" selected hidden>(Frequency)</option>
+                  <option>Monthly</option>
+                </select>
               </div>
+              <button class= 'btn btn-info' type="submit" id="submitBtn">ADD BILL</button>
             </div>
-            <button class= 'btn btn-danger' type="submit" id="submitBtn">ADD BILL</button>
           </form>
         </div>
       </div>
@@ -131,23 +137,25 @@
           <a data-toggle="collapse" href="#collapse1"><span class="glyphicon glyphicon-th-list"></span></a>
           </h4>
           <div id="collapse1" class="panel-collapse collapse">
-
-	          <ul class = "list-group">
 	            {{#each bills}}
 	              {{#unless this.active_status}}
-	                <li class = "list-group-item">
-	                  {{this.bill_name}}
-	                  {{this.bill_category}}
-                    <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
-                      <input type="hidden" name="bill_id" value="{{this.bill_id}}">
-                      <button class= 'btn btn-primary' type="submit" class="historyBtn" data-toggle="modal" id="{{{this.bill_id}}} data-target="#historyModal">HISTORY</button>
-                    </form>
-	                </li>
+                  <div class ="row">
+                    <div id="inactivePanel" class = "panel-body">
+                      <div id="inactiveList" class ="col-md-6">
+    	                  {{this.bill_name}} - 
+    	                  {{this.bill_category}}
+                      </div>
+                      <div id="inactiveForm" class ="col-md-6">
+                        <form action="/api/history/{{this.bill_id}}?_method=GET" method="GET">
+                          <input type="hidden" name="bill_id" value="{{this.bill_id}}">
+                          <button class= 'btn btn-primary' type="submit" class="historyBtn" data-toggle="modal" id="{{{this.bill_id}}} data-target="#historyModal">HISTORY</button>
+                        </form>
+                      </div>
+                    </div>
+	                </div>
 	              {{/unless}}
 	            {{/each}}
-	          </ul>
-
-	      </div>
+	        </div>
         </div>
       </div>
     </div>
@@ -155,13 +163,17 @@
 
   <br>
 
-  <button class= 'btn btn-danger' id="send_email">SEND EMAIL REMINDER</button>
+  <div class= "row">
+    <div class= "col-md-12">
+      <button class= 'btn btn-danger' id="send_email">SEND EMAIL REMINDER</button>
+    </div>
+  </div>
 
   <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 class="modal-title" id="modalLabel">History!</h2>
+          <h2 class="modal-title" id="modalLabel">Payment History</h2>
         </div>
         <div class="modal-body" id="historyModalBody">
           <ul class = "list-group historyListGroup" id="historyListGroup">
@@ -170,11 +182,10 @@
                 {{this.no_history}}
               {{else}}
                 <li class = "list-group-item">
-                  {{this.bill_id}}
-                  {{this.bill_name}}
-                  PAID: {{this.date_paid_formatted}}
-                  AMOUNT: ${{this.amount}}
-                  CONFIRMATION ID: {{this.confirmation_code}}
+                  <p>{{this.bill_name}}</p>
+                  <p>PAID: {{this.date_paid_formatted}}</p>
+                  <p>AMOUNT: ${{this.amount}}</p>
+                  <p>CONFIRMATION ID: {{this.confirmation_code}}</p>
                 </li>
               {{/if}}
             {{/each}}
@@ -190,7 +201,7 @@
   <footer class="footer">
     <div class="row text-center">
     	<div class="col-md-12">
-      		<p>&copy Copyright 2017</p>
+      		<p><strong>&copy Copyright BMJ 2017</strong></p>
       	</div>
     </div>
   </footer>

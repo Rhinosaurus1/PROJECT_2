@@ -8,7 +8,9 @@
 			    <!-- Added a link to Bootstrap CSS-->
 	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	    <!-- Added link to jQuery library-->
+	    <link href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 		<!-- Added link to the Bootstrap JS -->
 		<!-- Latest compiled and minified JavaScript -->
@@ -28,10 +30,6 @@
 
 	$("#DateDiv").html(monthYear);
 
-	//$("#inactive").on("click", function(event) {
-        //alert("Are you sure you want to inactivate?")
-    //});
-
 	$(".inactive").on("click", function(event) {
         event.preventDefault();
         var y = confirm("Are you sure you want to Inactivate?  This action cannot be undone!");
@@ -49,35 +47,53 @@
      	}	
   	});
 
-	//$(".historyBtn").on("click", function(event){
-	 	//event.preventDefault();
-	 	//var nodeId = $(this).attr('id');
-		//console.log("again ID: " + nodeId);
-
-	 	//$.ajax({
-	 		//type: "GET",
-	 		//url: "/api/history/" + nodeId
-	 	//}).done(function(yourData){
-	 		//$("#historyModal").modal("toggle");	
-	 	//});
-	//});
 
 	$("#historyModal").on("hidden.bs.modal", function () {
     	window.location = "/";
 	});
 
 	$(document).ready(function(){
-
     	$("#send_email").click(function(){      
-
 	        $.get("/send", function(response){
 	        	console.log("response: " + response);
 		        if(response == "sent"){
 		            alert("Email has been sent. Please check inbox!");
 		        }
-
 			});
     	});
+	});
+
+	$(document).ready(function(){
+		$('#newBillForm').bootstrapValidator({
+			fields:{
+				billName: {
+					validators:{
+						stringLength:{
+							min: 2,
+						},
+						notEmpty: {
+							message: "Please enter a name for the bill longer than 2 characters"
+						}
+					}
+				},
+
+				confirmID: {
+					validators:{
+						stringLength:{
+							min: 1,
+						}
+					}
+				},
+
+				amount:{
+					validators:{
+						notEmpty: {
+							message: "Please enter a valid monetary amount greater than 0.01"
+						}
+					}
+				}
+			}
+		});
 	});
 
 </script>
