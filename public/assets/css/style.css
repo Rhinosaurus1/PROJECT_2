@@ -7,6 +7,26 @@ body{
 	background-image: url("../images/grey_wash_wall.png");
 }
 
+.jumbotron{
+    text-align: center;
+    color: white;
+    font-family: impact;
+    background-image: url("../images/burnmoney.png");
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#jumboTitle{
+	font-size: 80px;
+	margin-top: 40px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#subTitle{
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
 #page-header{
 	font-weight: bold;
 	font-size: 60px;
@@ -68,6 +88,14 @@ body{
 	padding-top: 0px;
 }
 
+#amount{
+	width: 150px;
+}
+
+#confirmID{
+	width: 150px;
+}
+
 #addBillPanel{
 	padding: 5px;
 }
@@ -81,7 +109,7 @@ body{
 	margin-top: 25px;
 }
 
-.glyphGroup{
+.noOutline{
 	border: 0px !important;
 }
 

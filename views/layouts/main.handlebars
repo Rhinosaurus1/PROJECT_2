@@ -51,13 +51,31 @@
 	$("#historyModal").on("hidden.bs.modal", function () {
     	window.location = "/";
 	});
+	
+	$(document).ready(function(){
+		$("#emailForm").bootstrapValidator({
+			email: {
+                validators: {
+                    notEmpty: {
+                        message: 'Please supply your email address'
+                    },
+                    emailAddress: {
+                        message: 'Please supply a valid email address'
+                    }
+                }
+            }
+		});
+	});
 
 	$(document).ready(function(){
-    	$("#send_email").click(function(){      
-	        $.get("/send", function(response){
+    	$("#send_email").click(function(){
+
+    		var emailAddress = $("#email_input").val().trim();
+
+	        $.get("/send/" + emailAddress, function(response){
 	        	console.log("response: " + response);
 		        if(response == "sent"){
-		            alert("Email has been sent. Please check inbox!");
+		            alert("Email has been sent to "+ emailAddress +" Please check inbox!");
 		        }
 			});
     	});
@@ -91,10 +109,11 @@
 							message: "Please enter a valid monetary amount greater than 0.01"
 						}
 					}
-				}
+				},
 			}
 		});
 	});
+
 
 </script>
 

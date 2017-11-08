@@ -7,6 +7,7 @@ CREATE TABLE User(
   user_id INT NOT NULL auto_increment,
   user_name VARCHAR(100) NOT NULL,
   login_name VARCHAR(100) NOT NULL,
+  email_address VARCHAR(100),
   password VARCHAR(100) NOT NULL,
   active_status BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (user_id)

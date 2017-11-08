@@ -35,11 +35,20 @@ var bills = require("../models/bills.js");
     //}
   //});
 //});
-router.get("/send", function(req,res){
+router.get("/send/:email", function(req,res){
+
+  var emailAddress = req.params.email;
+
+  console.log("req:" + JSON.stringify(req.params.email));
+  console.log(emailAddress);
+
+
   bills.selectAllUnpaid(function(data){
     var paymentObj = {
       payments: data
     };
+
+   
 
     console.log(JSON.stringify(paymentObj.payments));
 
@@ -71,7 +80,7 @@ router.get("/send", function(req,res){
 
     var mailOptions = {
       from: 'billstopay109@gmail.com',
-      to: 'allenjeffreyl@gmail.com',
+      to: emailAddress,
       subject: "Bills due in " + monthYear,
       text: "Bills due in " + monthYear,
       html: "<p><b>THE FOLLOWING BILLS ARE DUE IN " +monthYear+ "</b></p>" + billText
