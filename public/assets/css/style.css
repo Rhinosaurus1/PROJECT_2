@@ -46,6 +46,11 @@ body{
 	padding-left: 15px;
 }
 
+#billName{
+	margin:0px;
+	color: black !important;
+}
+
 #payBtn{
 	width: 68px;
 }
@@ -90,10 +95,12 @@ body{
 
 #amount{
 	width: 150px;
+	margin:auto;
 }
 
 #confirmID{
 	width: 150px;
+	margin: auto;
 }
 
 #addBillPanel{
@@ -136,8 +143,8 @@ input{
 
 .btnDiv{
 	width: 120px;
-	margin-right: 15px;
-	margin-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 #center-card{

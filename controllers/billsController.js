@@ -3,55 +3,23 @@ var express = require("express");
 var router = express.Router();
 var nodemailer = require("nodemailer");
 
+//require models
 var bills = require("../models/bills.js");
 
-//router.get("/", function(req, res) {
-  //bills.selectAll(function(data) {
-    //var hbsObject = {
-      //bills: data
-    //};
-    //console.log(hbsObject);
-    //res.render("index", hbsObject);
-  //});
-//});
 
-//router.get("/", function(req, res) {
-  //bills.selectAllPayments(function(data) {
-    //var hbsObject = {
-      //payments: data
-    //};
-    //console.log(hbsObject);
-    //res.render("index", hbsObject);
-  //});
-//});
-
-//router.put("/api/payments/:id", function(req, res) {
-  //bills.updateOnePayment("payments", "payment_id", req.params.id, function(result) {
-    //if (result.changedRows == 0) {
-      //return res.status(404).end();
-    //} 
-    //else {
-      //res.redirect("/");
-    //}
-  //});
-//});
+//email route
 router.get("/send/:email", function(req,res){
-
+  
+  //set email address as entered email
   var emailAddress = req.params.email;
 
-  console.log("req:" + JSON.stringify(req.params.email));
-  console.log(emailAddress);
-
-
+  //get all unpaid bills
   bills.selectAllUnpaid(function(data){
     var paymentObj = {
       payments: data
     };
 
-   
-
-    console.log(JSON.stringify(paymentObj.payments));
-
+    //set up node mailer default sender
     var transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -61,6 +29,7 @@ router.get("/send/:email", function(req,res){
       }
     });
 
+    //get month and year for email
     var monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var date = new Date();
     var month = monthsArray[date.getMonth()];
@@ -68,16 +37,14 @@ router.get("/send/:email", function(req,res){
     var monthYear = month+"-"+year;
 
     var billText = "";
-    console.log("paymentObj payments length: " + paymentObj.payments.length);
 
+    //loop through payments due and html-ify for email, adding to total text
     for(i=0; i<paymentObj.payments.length; i++){
       var billItem = ("<p>Bill Name:   <b>" + paymentObj.payments[i].bill_name + "</b>      Due:    <b>" + paymentObj.payments[i].month_due_formatted + "</b></p>");
       billText = billText + billItem;
     };
 
-    console.log(billText);
-    console.log(JSON.stringify(billText));
-
+    //set up email to send, to , from, subject, text
     var mailOptions = {
       from: 'billstopay109@gmail.com',
       to: emailAddress,
@@ -86,16 +53,17 @@ router.get("/send/:email", function(req,res){
       html: "<p><b>THE FOLLOWING BILLS ARE DUE IN " +monthYear+ "</b></p>" + billText
     };
 
+    //send email, log error if any, return "sent" if no error
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return console.log(error);
         }
-        console.log('Message sent: %s', info.messageId);
     });
     res.send("sent");
   });
 });
 
+//route to get all bills active and inactive as well as all payments due for current month
 router.get("/", function(req, res) {
   bills.selectAllBillsPayments(function(data) {
     var hbsObject = {
@@ -106,6 +74,7 @@ router.get("/", function(req, res) {
   });
 });
 
+//route to add a new bill account and a new payment due for current month
 router.post("/", function(req, res) {
   bills.insertOne("bills", "user_id", "bill_name", "bill_category", "due_frequency", 1, req.body.billName, req.body.billCategory, req.body.frequency, function(result) {
     var newbillID = result.insertId;
@@ -120,21 +89,7 @@ router.post("/", function(req, res) {
   });
 });
 
-
-//router.get("/api/history/:id", function(req, res) {
-  //bills.selectHistory("payments", req.params.id, function(data) {
-    //console.log("req.body: " + JSON.stringify(req.body));
-    //console.log("data: " + JSON.stringify(data));
-    //var hbsObject = {
-      //history: data
-    //}
-    //console.log(hbsObject);
-    //res.render("index", hbsObject);
-    //res.redirect("/");
-  //});
-//});
-
-
+//route to retrieve payment history of selected bill
 router.get("/api/history/:id", function(req, res) {
     var hbsObjectNew = {
     bills: "",
@@ -153,12 +108,11 @@ router.get("/api/history/:id", function(req, res) {
         hbsObjectNew.history = data2;
       }
       res.render("index", hbsObjectNew);
-    //res.redirect("/");
     });
   });
 });
 
-//table, field1, amount, field2, confirmID, field3, paymentID, cb
+//route to log payment of a bill and add new payment due for following month
 router.put("/api/payments/:id", function(req, res) {
   bills.updateOnePaymentNew("payments", "amount", req.body.amount, "confirmation_code", req.body.confirmID, "payment_id", req.params.id, function(result){
     bills.insertNextPayment("payments", "bill_id", "month_due", req.body.bill_id, function(result){
@@ -172,6 +126,7 @@ router.put("/api/payments/:id", function(req, res) {
   });
 });
 
+//route to inactivate a bill and all pending payments
 router.put("/api/bills/:id", function(req, res) {
   bills.updateOneBill("bills", "bill_id", req.params.id, "payments", "bill_id",  req.params.id, function(result) {
     console.log(JSON.stringify(result));
@@ -184,5 +139,5 @@ router.put("/api/bills/:id", function(req, res) {
   });
 });
 
-
+//export router
 module.exports = router;

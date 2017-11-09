@@ -52,12 +52,12 @@
                         </ul>
                       {{/if}}
                       {{#unless this.paid_status}}
-                        <form action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
+                        <form id="paymentForm" action="/api/payments/{{this.payment_id}}?_method=PUT" method="POST">
                           <p><div class="form-group form-inline justify-content-center">
                             <input type="hidden" name="payment_id" value="{{this.payment_id}}">
                             <input type="hidden" name="bill_id" value="{{this.bill_id}}">
                             <label id="amountLabel" for="validationCustom01"><strong>Amount: $</strong></label>
-                            <input type="number" min="0.01" max="1000000000.00" step="0.01" class="form-control" id="amount" name="amount" placeholder="(Amount)" required >
+                            <input type="number" min="0.01" max="1000000000.00" step="0.01" class="form-control" id="amount" name="amount" placeholder="(Amount)" required>
                           </div></p>
                           <p><div class="form-group form-inline justify-content-center">
                             <label><strong>Confirmation ID:</strong></label>
@@ -101,10 +101,10 @@
           <form id="newBillForm" class="create-update-form form-inline action="/api/bills?_method=POST" method="POST">
             <div id="inlineBillForm" class="form-inline">
               <div class = "form-group">
-                <input type="text" class="form-control" id="billName" name="billName" placeholder="(Name)" required>
+                <input type="text" class="form-control" id="billName" name="billName" placeholder="(Name)">
               </div>
               <div class = "form-group">
-                <select class="form-control" id="billCategory" name="billCategory" required>
+                <select class="form-control" id="billCategory" name="billCategory">
                   <option value="" selected hidden>(Category)</option>
                   <option>Utilities</option>
                   <option>Service</option>
@@ -117,7 +117,7 @@
                 </select>
               </div>
               <div class = "form-group">
-                <select class="form-control" id="frequency" name="frequency"required>
+                <select class="form-control" id="frequency" name="frequency">
                   <option value="" selected hidden>(Frequency)</option>
                   <option>Monthly</option>
                 </select>
@@ -171,7 +171,7 @@
     <div class= "col-md-12">
     	<form id="emailForm" class= "form-inline">
     		<div class="form-group">
-		    	<input type="text" class="form-control" id="email_input" name="email" placeholder="youremail@mail.com" required>
+		    	<input id="email_input" name="email" placeholder="E-Mail Address" class="form-control" type="text">
 		    	<button type="submit" class='btn btn-danger' id="send_email">SEND EMAIL REMINDER</button>
 		    </div>
 	    </form>

@@ -10,7 +10,8 @@
 	    <!-- Added link to jQuery library-->
 	    <link href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" rel="stylesheet">
 		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"></script>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 		<!-- Added link to the Bootstrap JS -->
 		<!-- Latest compiled and minified JavaScript -->
@@ -28,8 +29,10 @@
 	var year = date.getFullYear();
 	var monthYear = month+"-"+year;
 
+	//display the current month and year
 	$("#DateDiv").html(monthYear);
 
+	//warning for inactivation of bill
 	$(".inactive").on("click", function(event) {
         event.preventDefault();
         var y = confirm("Are you sure you want to Inactivate?  This action cannot be undone!");
@@ -38,6 +41,7 @@
         }
     });
 
+	//on window load if history is empty then return else display modal and prevent actions from closing except close button
     $(window).load(function(){
     	if(!$.trim($("#historyListGroup").html()).length){
      		return;
@@ -47,26 +51,30 @@
      	}	
   	});
 
-
+    //on closing of modal return home
 	$("#historyModal").on("hidden.bs.modal", function () {
     	window.location = "/";
 	});
 	
+	//form validation for email form
 	$(document).ready(function(){
 		$("#emailForm").bootstrapValidator({
-			email: {
-                validators: {
-                    notEmpty: {
-                        message: 'Please supply your email address'
-                    },
-                    emailAddress: {
-                        message: 'Please supply a valid email address'
-                    }
-                }
+			fields:{
+				email:{
+	                validators: {
+	                    notEmpty: {
+	                        message: 'Please supply your email address'
+	                    },
+	                    emailAddress: {
+	                        message: 'Please supply a valid email address'
+	                    }
+	                }
+	            }
             }
 		});
 	});
 
+	//action/rout for sending email
 	$(document).ready(function(){
     	$("#send_email").click(function(){
 
@@ -81,6 +89,7 @@
     	});
 	});
 
+	//form validation for new bill
 	$(document).ready(function(){
 		$('#newBillForm').bootstrapValidator({
 			fields:{
@@ -93,8 +102,15 @@
 							message: "Please enter a name for the bill longer than 2 characters"
 						}
 					}
-				},
+				}
+			}
+		});
+	});
 
+	//form validation for payment
+	$(document).ready(function(){
+		$("#paymentForm").bootstrapValidator({
+			fields:{
 				confirmID: {
 					validators:{
 						stringLength:{
@@ -105,12 +121,16 @@
 
 				amount:{
 					validators:{
-						notEmpty: {
+						number:{
+							min: 0.01,
+							max: 10000000000.00
+						},
+						notEmpty:{
 							message: "Please enter a valid monetary amount greater than 0.01"
 						}
 					}
 				},
-			}
+            }
 		});
 	});
 
