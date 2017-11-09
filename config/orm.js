@@ -6,7 +6,7 @@ var connection = require("../config/connection.js");
 var orm = {
 
   selectHistory: function(table, billID, cb) {
-    var queryString = "select b.bill_name,p.bill_id, date_format((p.date_paid), '%m-%d-%Y') as 'date_paid_formatted',p.amount,p.confirmation_code from ?? as p inner join bills as b on p.bill_id = b.bill_id where p.paid_status != 0 and p.bill_id = ?";
+    var queryString = "select b.bill_name,p.bill_id, date_format((p.date_paid), '%m-%d-%Y') as 'date_paid_formatted',p.amount,p.confirmation_code from ?? as p inner join bills as b on p.bill_id = b.bill_id where p.paid_status != 0 and p.bill_id = ?;";
     connection.query(queryString, [table, billID], function(err, result) {
       if (err) {
         throw err;
@@ -26,8 +26,8 @@ var orm = {
   },
 
   selectAllBillsPayments: function(cb){
-    var queryString1 = "SELECT * FROM bills";
-    var queryString2 = "SELECT p.payment_id, p.bill_id, date_format((p.date_paid), '%m-%d-%Y') as 'date_paid_formatted', p.confirmation_code, p.amount, date_format((p.month_due), '%b-%Y') as 'month_due_formatted', p.paid_status, b.bill_name, p.active_status from payments as p inner join bills as b on p.bill_id = b.bill_id where Month(month_due) = MONTH(Current_date()) and Year(month_due) = Year(Current_date())";
+    var queryString1 = "SELECT * FROM bills;";
+    var queryString2 = "SELECT p.payment_id, p.bill_id, date_format((p.date_paid), '%m-%d-%Y') as 'date_paid_formatted', p.confirmation_code, p.amount, date_format((p.month_due), '%b-%Y') as 'month_due_formatted', p.paid_status, b.bill_name, p.active_status from payments as p inner join bills as b on p.bill_id = b.bill_id where Month(month_due) = MONTH(Current_date()) and Year(month_due) = Year(Current_date());";
     var queryString = queryString1 + ";" + queryString2;
     connection.query(queryString, function(err, result){
       if (err) {
@@ -68,7 +68,7 @@ var orm = {
   },
 
   updateOnePaymentNew: function(table, field1, amount, field2, confirmID, field3, paymentID, cb) {
-    var queryString = "UPDATE ?? SET paid_status ='1', date_paid = DATE_FORMAT(NOW(),'%Y-%m-%d'), ?? = ?, ?? = ? WHERE ?? = ?";
+    var queryString = "UPDATE ?? SET paid_status ='1', date_paid = DATE_FORMAT(NOW(),'%Y-%m-%d'), ?? = ?, ?? = ? WHERE ?? = ?;";
     connection.query(queryString,[table, field1, amount, field2, confirmID, field3, paymentID], function(err, result) {
       if (err) {
         throw err;
@@ -78,8 +78,8 @@ var orm = {
   },
 
   updateOneBill: function(table1, field1, billID, table2, field2, billID, cb) {
-    var queryString1 = "UPDATE ?? SET active_status ='0' WHERE ?? = ?";
-    var queryString2 = "UPDATE ?? SET active_status ='0' WHERE ?? = ?";
+    var queryString1 = "UPDATE ?? SET active_status ='0' WHERE ?? = ?;";
+    var queryString2 = "UPDATE ?? SET active_status ='0' WHERE ?? = ?;";
     var queryString = queryString1 + ";" + queryString2;
     connection.query(queryString,[table1, field1, billID, table2, field2, billID], function(err, result) {
       if (err) {

@@ -21,7 +21,7 @@ CREATE TABLE bills(
   due_frequency VARCHAR(100) NOT NULL DEFAULT 'MONTHLY',
   active_status BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (bill_id),
-  FOREIGN KEY (user_id) references User (user_id)
+  FOREIGN KEY (user_id) references user (user_id)
 );
 
 
@@ -35,5 +35,5 @@ CREATE TABLE payments(
   amount DOUBLE(11,2),
   active_status BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (payment_id),
-  FOREIGN KEY (bill_id) references Bills (bill_id)
+  FOREIGN KEY (bill_id) references bills (bill_id)
 );
