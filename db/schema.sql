@@ -3,7 +3,7 @@ CREATE DATABASE Bill_Tracker_DB;
 
 USE Bill_Tracker_DB;
 
-CREATE TABLE User(
+CREATE TABLE user(
   user_id INT NOT NULL auto_increment,
   user_name VARCHAR(100) NOT NULL,
   login_name VARCHAR(100) NOT NULL,
@@ -13,20 +13,19 @@ CREATE TABLE User(
   PRIMARY KEY (user_id)
 );
 
-CREATE TABLE Bills(
+CREATE TABLE bills(
   bill_id INT NOT NULL auto_increment,
   user_id INT NOT NULL,
   bill_name VARCHAR(255) NOT NULL,
   bill_category VARCHAR(100),
   due_frequency VARCHAR(100) NOT NULL DEFAULT 'MONTHLY',
-  start_month DATE,
   active_status BOOLEAN NOT NULL DEFAULT TRUE,
   PRIMARY KEY (bill_id),
   FOREIGN KEY (user_id) references User (user_id)
 );
 
 
-CREATE TABLE Payments(
+CREATE TABLE payments(
   payment_id INT NOT NULL auto_increment,
   bill_id INT NOT NULL,
   month_due DATE NOT NULL,

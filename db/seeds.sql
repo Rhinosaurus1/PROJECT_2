@@ -1,2 +1,42 @@
 
 INSERT INTO user (user_name, login_name, password) VALUES ('team', 'team-name', '123');
+
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('1', '1', 'Mortgage', 'Housing (Rent/Mortgage)', 'Monthly', '1');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('2', '1', 'Capital One', 'Credit Card', 'Monthly', '1');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('3', '1', 'Water', 'Utilities', 'Monthly', '1');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('4', '1', 'Ed Financial', 'Loan Payments', 'Monthly', '1');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('5', '1', 'Geico', 'Insurance', 'Monthly', '1');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('6', '1', 'Express Card', 'Credit Card', 'Monthly', '0');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('7', '1', 'Electric', 'Utilities', 'Monthly',  '1');
+INSERT INTO bills (bill_id, user_id, bill_name, bill_category, due_frequency, active_status) VALUES ('8', '1', 'Car Loan', 'Loan Payments', 'Monthly', '0');
+
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('1', '1', '2017-11-01', '1', '2017-11-08', 'XYZ789', '1200.95', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('2', '2', '2017-11-01', '0', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('3', '3', '2017-11-01', '1', '2017-11-08', 'XCV345', '52.36', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('4', '4', '2017-11-01', '0', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('5', '5', '2017-11-01', '0', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('6', '6', '2017-11-01', '1', '2017-11-08', 'LMNO3', '45.26', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('7', '7', '2017-11-01', '0', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('8', '8', '2017-11-01', '1', '2017-11-08', 'ABC123', '235.45', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('9', '8', '2017-12-01', '0', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('10', '6', '2017-12-01', '0', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('11', '1', '2017-12-01', '0', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, active_status) VALUES ('12', '3', '2017-12-01', '0', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('13', '1', '2017-10-01', '1', '2017-10-15', 'XYZ678', '1200.95', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('14', '1', '2017-09-01', '1', '2017-09-11', 'XYZ345', '1205.55', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('15', '1', '2017-08-01', '1', '2017-08-21', 'XYZ123', '1205.53', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('16', '2', '2017-10-01', '1', '2017-10-06', 'GHJ3456', '85.23', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('17', '2', '2017-09-01', '1', '2017-09-07', 'RTY5679', '74.25', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('18', '3', '2017-10-01', '1', '2017-10-14', 'HBTS3451', '45.21', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('19', '3', '2017-09-01', '1', '2017-09-13', 'HBTS1265', '55.21', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('20', '4', '2017-10-01', '1', '2017-10-22', 'RT97532', '122.36', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('21', '4', '2017-09-01', '1', '2017-09-23', 'RT78564', '121.45', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('22', '4', '2017-08-01', '1', '2017-08-24', 'ERT56473', '125.48', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('23', '5', '2017-10-01', '1', '2017-10-03', 'vcxz7634', '56.25', '1');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('24', '6', '2017-10-01', '1', '2017-10-10', 'EFDR1q2w', '52.87', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('25', '6', '2017-09-01', '1', '2017-09-11', 'DETFG6y78u', '110.24', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('26', '6', '2017-08-01', '1', '2017-08-09', 'GSDGS2e3r45', '110.24', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('27', '6', '2017-07-01', '1', '2017-07-12', 'FTJNB3e5hs3', '122.85', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('28', '8', '2017-10-01', '1', '2017-10-24', '4567DERFYH', '215.22', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('29', '8', '2017-09-01', '1', '2017-09-21', '46438FRESSC', '215.23', '0');
+INSERT INTO payments (payment_id, bill_id, month_due, paid_status, date_paid, confirmation_code, amount, active_status) VALUES ('30', '8', '2017-08-01', '1', '2017-08-23', '759303NJNJ', '216.89', '0');
