@@ -74,7 +74,7 @@
 		});
 	});
 
-	//action/rout for sending email
+	//action/route for sending email
 	$(document).ready(function(){
     	$("#send_email").click(function(){
 
@@ -117,19 +117,7 @@
 							min: 1,
 						}
 					}
-				},
-
-				amount:{
-					validators:{
-						number:{
-							min: 0.01,
-							max: 10000000000.00
-						},
-						notEmpty:{
-							message: "Please enter a valid monetary amount greater than 0.01"
-						}
-					}
-				},
+				}
             }
 		});
 	});
