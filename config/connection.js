@@ -10,7 +10,7 @@ else {
   connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Determined08!",
+    password: "****",
     database: "bill_tracker_db",
     multipleStatements: true
   });
